@@ -1,0 +1,143 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/customerUi :: header"></div>
+<script th:src="@{/myjs/jquery.fontstar.js}"></script>
+
+
+<body>
+	<div th:insert="fragments/customerUi :: menu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-body">
+
+				<div class="row">
+					<div class="col-4">
+						<img th:src="${pob.imageLink}" />
+					</div>
+					<div class="col-8">
+						<table class="table">
+							<tr>
+								<td>NAME</td>
+								<td class="bg-info text-white">[[${pob.name}]]</td>
+							</tr>
+							<tr>
+								<td>COST</td>
+								<td class="bg-info text-white">
+									<span th:if="${pob.discount==null}">
+										<h3> MRP : [[${pob.cost}]] </h3>
+									</span>
+									<span th:if="${pob.discount!=null}">
+										<h6> <strike> Mrp: [[${pob.cost}]] /-</strike> </h6>
+										<h3> NOW!! [[${pob.cost - pob.discount }]] /- </h3>
+									</span>
+								</td>
+							</tr>
+							<tr>
+								<td>BRAND</td>
+								<td class="bg-info text-white">[[${pob.brand.name}]]</td>
+							</tr>
+							<tr>
+								<td>Details</td>
+								<td>
+									<ul>
+										<li>[[${pob.shortDesc}]]</li>
+										<li>[[${pob.fullDesc}]]</li>
+										<li>LENGTH:[[${pob.len}]] x WIDTH: [[${pob.wid}]] x HEIGHT: [[${pob.height}]]
+										</li>
+										<li>WEIGHT : [[${pob.weight}]] ( [[${pob.wigType}]] ) </li>
+									</ul>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<a class="btn btn-success" th:href="@{/cart/add(prodId=${pob.id})}">ADD TO CART</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="card-footer bg-info text-white">
+				<h4 class="text-white">[[${message}]]</h4>
+				<div sec:authorize="isAuthenticated()">
+					<div th:if="${!isRated}" id="ratingSection">
+
+						<input type="hidden" id="prodId" th:value="${pob.id}" />
+						<b>RATE THIS PRODUCT</b>
+						<i class="fa fa-star" aria-hidden="true" id="st1"></i>
+						<i class="fa fa-star" aria-hidden="true" id="st2"></i>
+						<i class="fa fa-star" aria-hidden="true" id="st3"></i>
+						<i class="fa fa-star" aria-hidden="true" id="st4"></i>
+						<i class="fa fa-star" aria-hidden="true" id="st5"></i>
+						<br />
+						REVIEW : <textarea id="reviewText" class="form-control"></textarea>
+						<button class="btn btn-outline-warning" id="submitRating">Submit</button>
+					</div>
+					<div th:if="${isRated}"> <b>YOU ALREADY RATED THIS PRODUCT!</b></div>
+					<span class="text-white" id="rateMessage"></span>
+				</div>
+				<br />
+				<table class="table">
+					<tr th:each="ob:${ratingList}" class="bg-white">
+						<th>Customer: [[${ob.customer.name}]]
+							<br />
+							<th:block th:each="i:${#numbers.sequence(1, ob.starVal)}">
+						   <i class="fa fa-star" aria-hidden="true"></i>
+						  </th:block>
+						 <br/>
+						 [[${ob.review}]] </th>
+					</tr>
+				</table>
+			</div>
+
+		</div>
+	</div>
+	<script>
+		$(document).ready(function () {
+			var starVal = 0;
+			$("#st1").click(function () {
+				$(".fa-star").css("color", "white");
+				$("#st1").css("color", "yellow");
+				starVal = 1;
+			});
+			$("#st2").click(function () {
+				$(".fa-star").css("color", "white");
+				$("#st1, #st2").css("color", "yellow");
+				starVal = 2;
+			});
+			$("#st3").click(function () {
+				$(".fa-star").css("color", "white")
+				$("#st1, #st2, #st3").css("color", "yellow");
+				starVal = 3;
+
+			});
+			$("#st4").click(function () {
+				$(".fa-star").css("color", "white");
+				$("#st1, #st2, #st3, #st4").css("color", "yellow");
+				starVal = 4;
+
+			});
+			$("#st5").click(function () {
+				$(".fa-star").css("color", "white");
+				$("#st1, #st2, #st3, #st4, #st5").css("color", "yellow");
+				starVal = 5;
+
+			});
+
+			$("#submitRating").click(function () {
+				var review = $("#reviewText").val();
+				var prodId = $("#prodId").val();
+				//alert(prodId+"-"+starVal +"-"+review);
+				$.ajax({
+					url: '../../rating/add',
+					data: {prodId: prodId, review: review, starVal: starVal},
+					success: function (resTxt) {
+						$("#ratingSection").hide();
+						$("#rateMessage").html(resTxt);
+					}
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>

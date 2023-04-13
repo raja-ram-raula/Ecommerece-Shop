@@ -1,0 +1,50 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/commonui :: header"></div>
+
+<body>
+	<div th:insert="fragments/commonui :: menu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h1>Welcome to Stock Register Page</h1>
+			</div>
+			<div class="card-body">
+				<form id="mystockForm" th:action="@{/stock/save}" method="POST">
+					
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="product"> PRODUCT </label>
+						</div>
+						<div class="col-4">
+							<select name="product.id" id="product" class="form-control">
+								<option value="">-SELECT-</option>
+								<option th:each="ob:${products}" th:text="${ob.value}" th:value="${ob.key}"></option>
+							</select>
+						</div>
+						<div class="col-4" id="productError">
+						</div>
+					</div>
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="count"> Count</label>
+						</div>
+						<div class="col-4">
+							<input type="number" min="1" name="count" value="1" class="form-control"/>
+						</div>
+						<div class="col-4" id="countError">
+						</div>
+					</div>
+					
+					<input type="submit" value="Register" class="btn btn-success" />
+				</form>
+			</div>
+			<div class="card-footer bg-info text-white">
+				<b>[[${message}]]</b>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

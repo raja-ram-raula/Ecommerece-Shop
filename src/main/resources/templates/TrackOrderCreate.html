@@ -1,0 +1,48 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/commonui :: header"></div>
+
+<body>
+	<div th:insert="fragments/commonui :: menu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h1>ADD TRACK FOR ORDER</h1>
+			</div>
+			<div class="card-body">
+				<form th:action="@{/track/add}" method="POST">
+					<!-- row#1 -->
+					<div class="row">
+						<div class="col-3">
+							<label>ORDER ID</label>
+						</div>
+						<div class="col-4">
+							<input type="text" name="order.id" id="orderId" th:value="${orderId}" class="form-control" readonly />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-3">
+							<label>LOCATION</label>
+						</div>
+						<div class="col-4">
+							<input type="text" name="location" id="location"  class="form-control"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-3">
+							<label>DESCRIPTION</label>
+						</div>
+						<div class="col-4">
+							<textarea name="description" class="form-control"></textarea>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-success">ADD TRACKIKG</button>
+				</form>
+			</div>
+			<div class="card-footer bg-info text-white">
+				<b>[[${message}]]</b>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

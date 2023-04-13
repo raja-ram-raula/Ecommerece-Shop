@@ -1,0 +1,89 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/commonui :: header"></div>
+
+<body>
+	<div th:insert="fragments/commonui :: menu"></div>
+        <div class="container">
+            <div class="card">
+                <div class="card-header bg-primary text-center text-white">
+                    <h3>BRAND REGISTER</h3>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/brand/save}" method="POST">
+                        <!-- row#1 -->
+                        <div class="row">
+                            <div class="col-3">
+                                <label>NAME</label>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" name="name" id="name" class="form-control"/>
+                            </div>
+                            <div class="col-5">
+                                <span id="nameError"></span>
+                            </div>
+                        </div>
+
+                        <!-- row#2 -->
+                        <div class="row">
+                            <div class="col-3">
+                                <label>CODE</label>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" name="code" id="code" class="form-control"/>
+                            </div>
+                            <div class="col-5">
+                                <span id="codeError"></span>
+                            </div>
+                        </div>
+
+                        <!-- row#3 -->
+                        <div class="row">
+                            <div class="col-3">
+                                <label>TAG LINE</label>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" name="tagLine" id="tagLine" class="form-control"/>
+                            </div>
+                            <div class="col-5">
+                                <span id="tagLineError"></span>
+                            </div>
+                        </div>
+
+                        <!-- row#4 -->
+                        <div class="row">
+                            <div class="col-3">
+                                <label>IMAGE</label>
+                            </div>
+                            <div class="col-4">
+                                <input type="file" name="fileOb" id="fileOb" class="form-control" onchange="uploadFile()"/>
+                        		<input type="type" id="imageLink" name="imageLink" class="form-control" readonly/>
+                            </div>
+                            <div class="col-5">
+                                <span id="imageLinkError"></span>
+                            </div>
+                        </div>
+
+                        <!-- row#5 -->
+                        <div class="row">
+                            <div class="col-3">
+                                <label>NOTE</label>
+                            </div>
+                            <div class="col-4">
+                                <textarea name="note" id="note" class="form-control"></textarea>
+                            </div>
+                            <div class="col-5">
+                                <span id="noteError"></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">Add Brand</button>
+                    </form>
+                </div>
+                <div class="card-footer bg-info text-center">
+                    [[${message}]]
+                </div>
+            </div>
+        </div>
+         <script th:src="@{/myjs/uploadImgBb.js}"></script>
+    </body>
+
+</html>

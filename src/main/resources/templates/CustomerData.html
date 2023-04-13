@@ -1,0 +1,40 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/commonui :: header"></div>
+<body>
+<div th:insert="fragments/commonui :: menu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h1>Welcome to CUSTOMER Data Page</h1>
+			</div>
+			<div class="card-body">
+				<table class="table table-bordered table-hover">
+					<tr class="bg-warning ">
+						<td>NAME</td>
+						<td>EMAIL</td>
+						<td>GENDER</td>
+						<td>DOB</td>
+						<td>ADDRESS#1</td>
+						<td>ADDRESS#2</td>
+						<td colspan='2'>OPERATIONS</td>
+					</tr>
+					<tr th:each="ob:${list}">
+						<td>[[${ob.name}]]</td>
+						<td>[[${ob.email}]]</td>
+						<td>[[${ob.gender}]]</td>
+						<td>[[${ob.dob}]]</td>
+						<td>[[${ob.address[0]}]]</td>
+						<td>[[${ob.address[1]}]]</td>
+						<td><a th:href='@{/customer/delete(id=${ob.id})}' class="btn btn-danger">DELETE</a></td>
+						<td><a th:href='@{/customer/edit(id=${ob.id})}' class="btn btn-success">EDIT</a></td>
+					</tr>
+				</table>
+			</div>
+			<div class="card-footer bg-info text-white">
+				<b>[[${message}]]</b>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

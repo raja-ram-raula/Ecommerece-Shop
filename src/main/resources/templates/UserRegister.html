@@ -1,0 +1,130 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/commonui :: header"></div>
+
+<body>
+<div th:insert="fragments/commonui :: menu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h1>Welcome to User Register Page</h1>
+			</div>
+			<div class="card-body">
+				<form id="myUserForm" th:action="@{/user/save}" method="POST">
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="displayName">NAME</label>
+						</div>
+						<div class="col-4">
+							<input type="text" name="displayName" class="form-control" />
+						</div>
+						<div class="col-4" id="displayNameError">
+						</div>
+					</div>
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="email">EMAIL</label>
+						</div>
+						<div class="col-4">
+							<input type="text" id="email" name="email" class="form-control" />
+						</div>
+						<div class="col-4">
+							<span id="emailError"></span>
+						</div>
+					</div>
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="contact">MOBILE</label>
+						</div>
+						<div class="col-4">
+							<input type="text" name="contact" class="form-control" />
+						</div>
+						<div class="col-4" id="contactError">
+						</div>
+					</div>
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="role">ROLE</label>
+						</div>
+						<div class="col-4">
+							<input type="radio" name="role" value="ADMIN"/> ADMIN
+							<input type="radio" name="role" value="SALES"/> SALES
+							<input type="radio" name="role" value="EMPLOYEE"/> EMPLOYEE
+						</div>
+						<div class="col-4" id="roleError">
+						</div>
+					</div>
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="address">ADDRESS</label>
+						</div>
+						<div class="col-4">
+							<textarea name="address" class="form-control"></textarea>
+						</div>
+						<div class="col-4" id="addressError">
+						</div>
+					</div>
+					<input type="submit" value="Register" class="btn btn-success" />
+				</form>
+			</div>
+			<div class="card-footer bg-info text-white">
+				<b>[[${message}]]</b>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function(){
+			$("#emailError").hide();
+			
+			var emailError = false;
+			
+			function validate_email() {
+				var val = $("#email").val();
+				var exp = /^[A-Za-z0-9\.\-\_]+\@[a-z]{4,8}\.[a-z\.]{3,6}$/;
+				if(val=='') {
+					$("#emailError").show();
+					$("#emailError").html("Email id can not be empty");
+					$("#emailError").css('color','red');
+					emailError = false;
+				} else if(!exp.test(val)){
+					$("#emailError").show();
+					$("#emailError").html("Email id is invalid");
+					$("#emailError").css('color','red');
+					emailError = false;
+				} else {
+					$.ajax({
+						url : 'validateMail',
+						data : {"email": val},
+						success:function(resTxt){
+							if(resTxt!='') {
+								$("#emailError").show();
+								$("#emailError").html(resTxt);
+								$("#emailError").css('color','red');
+								emailError = false;
+							} else {
+								$("#emailError").hide();
+								emailError = true;
+							}
+						}
+					});
+				}
+				return emailError;
+			}
+			$("#email").keyup(function(){
+				validate_email();
+			});
+			
+			$("#myUserForm").submit(function() {
+				validate_email();
+				if(emailError) return true;
+				else return false;
+			});
+		});
+	</script>
+</body>
+
+</html>

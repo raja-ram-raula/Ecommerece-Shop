@@ -1,0 +1,70 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/customerUi :: header"></div>
+<body>
+<div th:insert="fragments/customerUi :: menu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h3>CUSTOMER ORDERS PAGE</h3>
+			</div>
+			<div class="card-body">
+				<table class="table table-bordered table-hover">
+					<tr class="bg-warning ">
+						<th>ID#</th>
+						<th>STATUS</th>
+						<th class="text-center">ITEMS</th>
+						<th>OPERATION</th>
+					</tr>
+					<tr th:each="ob:${list}">
+						<td>[[${ob.id}]]</td>
+						<td class="btn btn-success">[[${ob.status}]]</td>
+						<td>
+							<table class="table">
+								<tr class="bg-info ">
+									<th>NAME</th>
+									<th>COST</th>
+									<th>DISCOUNT</th>
+									<th>QTY</th>
+									<th>LINE AMOUT</th>
+								</tr>
+								<tr th:each="orderItem:${ob.orderItems}">
+									<td>
+									<img th:src="${orderItem.product.imageLink}" width="8%" height="8%"/>
+									[[${orderItem.product.name}]]
+									</td>
+									<td>[[${orderItem.product.cost}]]</td>
+									<td>
+									 <span th:if="${orderItem.discount!=null}">[[${orderItem.discount}]]</span>
+									 <span th:if="${orderItem.discount==null}"><b>NONE</b></span>
+									</td>
+									<td>[[${orderItem.qty}]]</td>
+									<td>[[${orderItem.lineAmount}]]</td>
+								</tr>
+							</table>
+							<h5 class="text-primary">Billig Address : [[${custAddr}]]</h4>
+							<h4 class="text-center">GRAND TOTAL : [[${ob.grandTotal}]]</h4>
+						</td>
+						
+						<td>
+						<a th:href='@{/order/cancel(id=${ob.id})}' class="btn btn-danger">CANCEL ORDER</a>
+						<br/> <br/>
+						<a th:if="${ob.status=='OPEN'}" th:href='@{/payment/billPay(orderId=${ob.id})}' class="btn btn-success">PAY AMOUNT</a>
+						<br/> <br/>
+						<a th:if="${ob.status!='OPEN'}" th:href='@{/order/invoice(orderId=${ob.id})}' class="btn btn-primary">
+						PRINT INVOICE 
+						</a>
+						<br/>
+						<br/>
+						<a th:href="@{/track/data(orderId=${ob.id})}" class="btn btn-info">TRACK ORDER</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="card-footer bg-info text-white">
+				<b>[[${message}]]</b>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

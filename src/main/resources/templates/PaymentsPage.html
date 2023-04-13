@@ -1,0 +1,70 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/customerUi :: header"></div>
+
+<body>
+	<div th:insert="fragments/customerUi :: menu"></div>
+	<div class="container">
+
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h3>PAYMENT DETAILS</h3>
+			</div>
+			<div class="card-body">
+				<table class="table">
+					<tr>
+						<td>Order ID</td>
+						<td>[[${order.id}]]</td>
+						<td>Status</td>
+						<td>[[${order.status}]]</td>
+					</tr>
+					<tr>
+						<td>Customer Name</td>
+						<td>[[${order.customer.name}]]</td>
+						<td><b>BILLING AMOUNT</b></td>
+						<td>[[${order.grandTotal}]]</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<div th:if="${order.coupon==null}">
+							<form th:action="@{/coupon/apply}" method="POST">
+								<div class="row">
+									<div class="col-2">
+										HAVING COUPON 
+									</div>
+									<div class="col-4">
+										<input type="text" name="couponCode" size="4" class="form-control" />
+									</div>
+									<div class="col-2">
+										<input type="hidden" name="orderId" th:value="${order.id}" />
+										<button class="btn btn-primary">Apply</button>
+									</div>
+								</div>
+							</form>
+							</div>
+							<b>[[${message}]]</b>
+						</td>
+					</tr>
+					<tr th:if="${order.coupon!=null}">
+						<td>Coupon Code</td>
+						<td>
+							[[${order.coupon.code}]]
+							<a th:href="@{/coupon/remove(orderId=${order.id})}" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
+						</td>
+						<td>Coupon Amount</td>
+						<td>
+							[[${order.couponAmt}]]
+						</td>
+					</tr>
+					<tr>
+						<td><b>AMOUNT TO BE PAID</b></td>
+						<td><b>[[${order.billingAmt}]]</b></td>
+					</tr>
+				</table>
+				<a th:href="@{/payment/showPay(orderId=${order.id})}" class="btn btn-info">PROCEED TO PAYMENT</a>
+			</div>
+
+		</div>
+	</div>
+</body>
+
+</html>

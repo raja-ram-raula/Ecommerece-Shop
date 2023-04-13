@@ -1,0 +1,77 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/commonui :: header"></div>
+
+<body>
+	<div th:insert="fragments/commonui :: menu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h3>ORDERS PAGE</h3>
+			</div>
+			<div class="card-body">
+				<table class="table table-bordered table-hover">
+					<tr class="bg-warning ">
+						<th>ID#</th>
+						<th>STATUS</th>
+						<th class="text-center">ITEMS</th>
+						<th colspan="2">OPERATION</th>
+
+					</tr>
+					<tr th:each="ob:${list}">
+						<td>[[${ob.id}]]</td>
+						<td class="btn btn-success">[[${ob.status}]]</td>
+						<td>
+							<table class="table">
+								<tr class="bg-info ">
+									<th>NAME</th>
+									<th>COST</th>
+									<th>QTY</th>
+									<th>LINE AMOUT</th>
+								</tr>
+								<tr th:each="orderItem:${ob.orderItems}">
+									<td>
+										<img th:src="${orderItem.product.imageLink}" width="8%" height="8%" />
+										[[${orderItem.product.name}]]
+									</td>
+									<td>[[${orderItem.product.cost}]]</td>
+									<td>[[${orderItem.qty}]]</td>
+									<td>[[${orderItem.lineAmount}]]</td>
+								</tr>
+							</table>
+						</td>
+
+						<td th:if="${ob.status!='OPEN'}">
+							<a th:if="${ob.status=='PLACED'}"
+								th:href='@{/order/updateStatus(id=${ob.id},status=ORDERED)}'
+								class="btn btn-success">ACCEPT ORDER</a>
+							<a th:if="${ob.status=='ORDERED'}"
+								th:href='@{/order/updateStatus(id=${ob.id},status=SHIPPING)}' class="btn btn-info">START
+								SHIPPING</a>
+							<a th:if="${ob.status=='SHIPPING'}"
+								th:href='@{/order/updateStatus(id=${ob.id},status=OUTFORDELIVERY)}'
+								class="btn btn-warning">DELIVERY OUT</a>
+							<a th:if="${ob.status=='OUTFORDELIVERY'}"
+								th:href='@{/order/updateStatus(id=${ob.id},status=DELIVERED)}'
+								class="btn btn-primary">DELIVERED</a>
+							<a th:if="${ob.status!='CANCELLED' && ob.status!='DELIVERED'}"
+								th:href='@{/order/updateStatus(id=${ob.id},status=CANCELLED)}'
+								class="btn btn-danger">CANCEL</a>
+							<b th:if="${ob.status=='DELIVERED'}">ORDER DELIVERED!</a>
+						</td>
+						<td th:if="${ob.status=='OPEN'}">
+							<b>PAYMENT DETAILS PENDING</b>
+						</td>
+						<td>
+							<a th:href="@{/track/register(orderId=${ob.id})}" class="btn btn-info">ADD TRACKING</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="card-footer bg-info text-white">
+				<b>[[${message}]]</b>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

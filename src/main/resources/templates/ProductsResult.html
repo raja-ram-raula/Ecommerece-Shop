@@ -1,0 +1,35 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/customerUi :: header"></div>
+
+<body>
+	<div th:insert="fragments/customerUi :: menu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h3>PRODUCTS RESULT HERE!!</h3>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<th:block th:each="ob:${list}">
+						<div class="col-4">
+							<div class="card">
+								<center>
+									<img class="card-img-top" th:src="${ob[1]}" style="width:50%;height: 50%; ">
+								</center>
+								<div class="card-body">
+									<h4 class="card-title">[[${ob[2]}]]</h4>
+									<p class="card-text">[[${ob[3]}]] <br/> <b>COST: [[${ob[4]}]]</b></p>
+									<a th:href="@{/search/productViewById(prodId=${ob[0]})}" class="btn btn-primary">See
+										Product</a>
+								</div>
+							</div>
+						</div>
+				</div>
+				</th:block>
+			</div>
+
+		</div>
+	</div>
+</body>
+
+</html>

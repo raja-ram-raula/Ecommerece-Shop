@@ -1,0 +1,38 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/commonui :: header"></div>
+<body>
+<div th:insert="fragments/commonui :: menu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h1>Welcome to Brand Data Page</h1>
+			</div>
+			<div class="card-body">
+				<table class="table table-bordered table-hover">
+					<tr class="bg-warning ">
+						<td>NAME</td>
+						<td>CODE</td>
+						<td>TAGLINE</td>
+						<td>IMAGE</td>
+						<td>NOTE</td>
+						<td colspan='2'>OPERATIONS</td>
+					</tr>
+					<tr th:each="ob:${list}">
+						<td>[[${ob.name}]]</td>
+						<td>[[${ob.code}]]</td>
+						<td>[[${ob.tagLine}]]</td>
+						<td> <img th:src="${ob.imageLink}"/></td>
+						<td>[[${ob.note}]]</td>
+						<td><a th:href='@{/brand/delete(id=${ob.id})}' class="btn btn-danger">DELETE</a></td>
+						<td><a th:href='@{/brand/edit(id=${ob.id})}' class="btn btn-success">EDIT</a></td>
+					</tr>
+				</table>
+			</div>
+			<div class="card-footer bg-info text-white">
+				<b>[[${message}]]</b>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

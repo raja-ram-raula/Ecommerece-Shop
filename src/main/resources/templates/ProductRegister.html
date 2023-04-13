@@ -1,0 +1,221 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/commonui :: header"></div>
+
+<body>
+	<div th:insert="fragments/commonui :: menu"></div>
+        <div class="container">
+        <div class="card">
+            <div class="card-header bg-primary text-white text-center">
+                <h3>WELCOME TO PRODUCT REGISTER PAGE</h3>
+            </div>
+            <div class="card-body">
+                <form id="myProductForm" th:action="@{/product/save}" method="POST">
+                    <!-- Row#1 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-5">
+                            <input type="text" name="name" id="name" class="form-control" />
+                        </div>
+                        <div class="col-4">
+                            <div id="nameError"></div>
+                        </div>
+                    </div>
+                    <!-- Row#2 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Short Description</label>
+                        </div>
+                        <div class="col-5">
+                            <input type="text" name="shortDesc" id="shortDesc" class="form-control" />
+                        </div>
+                        <div class="col-4">
+                            <div id="shortDescError"></div>
+                        </div>
+                    </div>
+                    <!-- Row#3 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Full Description</label>
+                        </div>
+                        <div class="col-5">
+                            <textarea name="fullDesc" id="fullDesc" class="form-control"></textarea>
+                        </div>
+                        <div class="col-4">
+                            <div id="fullDescError"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- row#4 -->
+                    <div class="row">
+                        <div class="col-3">
+                               <label>IMAGE</label>
+                        </div>
+                        <div class="col-4">
+                               <input type="file" name="fileOb" id="fileOb" class="form-control" onchange="uploadFile()"/>
+                       		<input type="type" id="imageLink" name="imageLink" class="form-control" readonly/>
+                         </div>
+                         <div class="col-5">
+                               <span id="imageLinkError"></span>
+                          </div>
+                    </div>
+                        
+                    <!-- Row#4 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Brand</label>
+                        </div>
+                        <div class="col-5">
+                            <select name="brand.id" id="brand" class="form-control">
+                                <option value="">-SELECT-</option>
+                                <option th:each="ob:${brands}" th:text="${ob.value}" th:value="${ob.key}"/>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <div id="brandError"></div>
+                        </div>
+                    </div>
+                    <!-- Row#5 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Category</label>
+                        </div>
+                        <div class="col-5">
+                            <select name="category.id" id="category" class="form-control">
+                                <option value="">-SELECT-</option>
+                                <option th:each="ob:${categories}" th:text="${ob.value}" th:value="${ob.key}"/>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <div id="categoryError"></div>
+                        </div>
+                    </div>
+                    <!-- Row#6 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Status</label>
+                        </div>
+                        <div class="col-5">
+                            <input type="radio" name="status" id="status" value="Active"/> Active
+                            <input type="radio" name="status" id="status" value="In-Active"/> In-Active
+                        </div>
+                        <div class="col-4">
+                            <div id="statusError"></div>
+                        </div>
+                    </div>
+                    <!-- Row#7 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>In-Stock</label>
+                        </div>
+                        <div class="col-5">
+                            <input type="radio" name="inStock" id="inStock" value="Yes"/> Yes
+                            <input type="radio" name="inStock" id="inStock" value="No"/> No
+                        </div>
+                        <div class="col-4">
+                            <div id="inStockError"></div>
+                        </div>
+                    </div>
+                    <!-- Row#8 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Cost</label>
+                        </div>
+                        <div class="col-5">
+                            <input type="text" name="cost" id="cost" class="form-control" />
+                        </div>
+                        <div class="col-4">
+                            <div id="costError"></div>
+                        </div>
+                    </div>
+                    <!-- Row#8(b) -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Discount</label>
+                        </div>
+                        <div class="col-5">
+                            <input type="text" name="discount" id="discount" class="form-control" />
+                        </div>
+                        <div class="col-4">
+                            <div id="discountError"></div>
+                        </div>
+                    </div>
+                    <!-- Row#9 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Dimension</label>
+                        </div>
+                        <div class="col-5">
+                            <div class="row">
+                                <div class="col-3">
+                                   LENGTH: <input type="text" name="len" id="len" class="form-control"/>
+                                </div>
+                                <div class="col-3">
+                                   WIDTH: <input type="text" name="wid" id="wid" class="form-control"/>
+                                 </div>
+                                 <div class="col-3">
+                                    HEIGHT: <input type="text" name="height" id="height" class="form-control"/>
+                                  </div>
+                                  <div class="col-3">
+                                    TYPE:
+                                    <select name="dimType" id="dimType" class="form-control">
+                                        <option value="INCH">INCH</option>
+                                        <option value="CM">CM</option>
+                                        <option value="METERS">METERS</option>
+                                    </select>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div id="dimTypeError"></div>
+                        </div>
+                    </div>
+                    <br/>
+                    <!-- Row#10 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Weight</label>
+                        </div>
+                        <div class="col-5">
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="text" name="weight" id="weight" class="form-control" />
+                                </div>
+                                <div class="col-6">
+                                    <select name="wigType" id="wigType" class="form-control">
+                                        <option value="KG">KG</option>
+                                        <option value="GRAM">GRAM</option>
+                                        <option value="TON">TON</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div id="weightError"></div>
+                        </div>
+                    </div>
+                    <!-- Row#11 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Note</label>
+                        </div>
+                        <div class="col-5">
+                            <textarea name="note" id="note" class="form-control"></textarea>
+                        </div>
+                        <div class="col-4">
+                            <div id="noteError"></div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success"> Add Product</button>
+                </form>
+            </div>
+            <div class="card-footer bg-info text-white">
+                <span>[[${message}]]</span>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/myjs/uploadImgBb.js}"></script>
+</body>
+
+</html>

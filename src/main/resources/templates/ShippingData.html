@@ -1,0 +1,40 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/commonui :: header"></div>
+<body>
+<div th:insert="fragments/commonui :: menu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h1>Welcome to Shipping Data Page</h1>
+			</div>
+			<div class="card-body">
+				<table class="table table-bordered table-hover">
+					<tr class="bg-warning ">
+						<td>SHIPTYPE</td>
+						<td>SHIPCODE</td>
+						<td>SHIPNAME</td>
+						<td>SHIPCOST</td>
+						<td>SHIPWEIGHT</td>
+						<td>NOTE</td>
+						<td colspan='2'>OPERATIONS</td>
+					</tr>
+					<tr th:each="ob:${list}">
+						<td>[[${ob.shipType}]]</td>
+						<td>[[${ob.shipCode}]]</td>
+						<td>[[${ob.shipName}]]</td>
+						<td>[[${ob.shipCost}]]</td>
+						<td>[[${ob.shipWeight}]] [[${ob.shipWeightType}]]</td>
+						<td>[[${ob.note}]]</td>
+						<td><a th:href='@{/shipping/delete(id=${ob.id})}' class="btn btn-danger">DELETE</a></td>
+						<td><a th:href='@{/shipping/edit(id=${ob.id})}' class="btn btn-info">EDIT</a></td>
+					</tr>
+				</table>
+			</div>
+			<div class="card-footer bg-info text-white">
+				<b>[[${message}]]</b>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

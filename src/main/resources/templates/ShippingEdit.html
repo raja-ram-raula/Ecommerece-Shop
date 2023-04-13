@@ -1,0 +1,111 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/commonui :: header"></div>
+
+<body>
+	<div th:insert="fragments/commonui :: menu"></div>
+        <div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h1>Welcome to Shipping Edit Page</h1>
+			</div>
+			<div class="card-body">
+				<form id="myshippingForm" th:action="@{/shipping/update}" method="POST" th:object="${shipping}">
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="id"> ID</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{id}" class="form-control" readonly/>
+						</div>
+					</div>
+					<!--new Row -->
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="shipType"> SHIPTYPE</label>
+						</div>
+						<div class="col-4">
+							<input type="radio" th:field="*{shipType}" value="Air"/> Air
+							<input type="radio" th:field="*{shipType}" value="Truck"/> Truck
+							<input type="radio" th:field="*{shipType}" value="Ship"/> Ship
+							<input type="radio" th:field="*{shipType}" value="Train"/> Train
+						</div>
+						<div class="col-4" id="shipTypeError">
+						</div>
+					</div>
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="shipCode"> SHIPCODE</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{shipCode}" class="form-control" />
+						</div>
+						<div class="col-4" id="shipCodeError">
+						</div>
+					</div>
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="shipName"> SHIPNAME</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{shipName}" class="form-control" />
+						</div>
+						<div class="col-4" id="shipNameError">
+						</div>
+					</div>
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="shipCost"> SHIPCOST</label>
+						</div>
+						<div class="col-4">
+							<input type="number" th:field="*{shipCost}" class="form-control" min="0" value="0.0" />
+						</div>
+						<div class="col-4" id="shipCostError">
+						</div>
+					</div>
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="shipWeight"> SHIPWEIGHT</label>
+						</div>
+						<div class="col-4">
+						  <div class="row">
+						  		<div class="col-6">
+									<input type="number" th:field="*{shipWeight}" class="form-control" min="1" value="1"/>
+						  		</div>
+						  		<div class="col-6">
+						  			<select th:field="*{shipWeightType}" class="form-control">
+						  				<option value="POUND">POUND</option>
+						  				<option value="KG">KG</option>
+						  				<option value="GRAM">GRAM</option>
+						  				<option value="LITER">LITER</option>
+						  			</select>
+						  		</div>
+						  </div>
+						</div>
+						<div class="col-4" id="shipWeightError">
+						</div>
+					</div>
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="note"> NOTE</label>
+						</div>
+						<div class="col-4">
+							<textarea th:field="*{note}" class="form-control"></textarea>
+						</div>
+						<div class="col-4" id="noteError">
+						</div>
+					</div>
+					<input type="submit" value="Update" class="btn btn-success" />
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

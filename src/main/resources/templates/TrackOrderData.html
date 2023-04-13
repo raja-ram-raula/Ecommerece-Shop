@@ -1,0 +1,33 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/customerUi :: header"></div>
+<body>
+<div th:insert="fragments/customerUi :: menu"></div>
+	<div class="container">
+		
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h3>ALL TRACKING DETAILS FOR YOUR ORDER</h3>
+			</div>
+			<div class="card-body">
+				<table class="table table-bordered table-hover">
+					<tr class="bg-warning ">
+						<!--<th>ID#</th>-->
+						<th>LOCATION</th>
+						<th>DATE</th>
+						<th>NOTE</th>
+
+					</tr>
+					<tr th:each="ob:${list}">
+						<!--<td>[[${ob.id}]]</td>-->
+						<td>[[${ob.location}]]</td>
+						<td>[[${ob.dte}]]</td>
+						<td>[[${ob.description}]]</td>
+					</tr>
+				</table>
+			</div>
+			
+		</div>
+	</div>
+</body>
+
+</html>

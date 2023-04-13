@@ -1,0 +1,25 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/customerUi :: header"></div>
+<body>
+<div th:insert="fragments/customerUi :: menu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h1>ALL CATEGORIE TYPES EXIST IN E-COMM</h1>
+			</div>
+			<div class="card-body">
+				<div class="list-group">
+				 <th:block th:each="ob:${list}">
+				 	<div class="list-group-item list-group-item-action">
+				 		<a th:href="@{/search/getCategories(catTypeId=${ob.id})}"> <h3>[[${ob.name}]]</h3> </a>
+				 		<span>[[${ob.note}]]</span>
+				 	</div>
+				 </th:block> 
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</body>
+
+</html>

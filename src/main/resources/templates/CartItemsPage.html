@@ -1,0 +1,53 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/customerUi :: header"></div>
+<body>
+<div th:insert="fragments/customerUi :: menu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h1>CART ITEMS PAGE!</h1>
+			</div>
+			<div class="card-body">
+				<table class="table table-bordered table-hover">
+					<tr class="bg-warning ">
+						<td>IMAGE</td>
+						<td>NAME</td>
+						<td>COST</td>
+						<td>DISCOUNT</td>
+						<td>QTY</td>
+						<td>LINE VALUE</td>
+						<td colspan='2'>OPERATIONS</td>
+					</tr>
+					<tr th:each="ob:${list}">
+						<td> <img th:src="${ob.product.imageLink}" width="15%" height="15%"/></td>
+						<td>[[${ob.product.name}]]</td>
+						<td>[[${ob.product.cost}]]</td>
+						<td>[[${ob.product.discount}]]</td>
+						<td>[[${ob.qty}]]</td>
+						<td>
+							<span th:if="${ob.product.discount!=null}">
+								[[${ob.qty * (ob.product.cost - ob.product.discount) }]]
+							</span>
+							<span th:if="${ob.product.discount==null}">
+								[[${ob.qty * ob.product.cost }]]
+							</span>
+						
+						</td>
+						<td>
+						 <a th:href='@{/cart/increase(cartItemId=${ob.id})}' class="btn btn-success">+</a>  
+						 <a th:if="${ob.qty>1}" th:href='@{/cart/decrease(cartItemId=${ob.id})}' class="btn btn-warning">-</a> 
+						</td>
+						<td><a th:href='@{/cart/remove(cartItemId=${ob.id})}' class="btn btn-danger">REMOVE</a></td>
+					</tr>
+				</table>
+				<a th:if="${list.size()>0}" th:href="@{/order/create}" class="btn btn-success">Place order</a>
+				<b th:if="${list.isEmpty()}" class="text-danger">NO ITEMS IN CART</b>
+			</div>
+			<div th:if="${message!=null}" class="card-footer bg-info text-white">
+				<b>[[${message}]]</b>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

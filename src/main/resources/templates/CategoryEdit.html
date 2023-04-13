@@ -1,0 +1,89 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/commonui :: header"></div>
+
+<body>
+	<div th:insert="fragments/commonui :: menu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h1>Welcome to Category Edit Page</h1>
+			</div>
+			<div class="card-body">
+				<form id="mycategoryForm" th:action="@{/category/update}" method="POST" th:object="${category}">
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="id"> ID </label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{id}" class="form-control" readonly />
+						</div>
+
+					</div>
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="name"> NAME</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{name}" class="form-control" />
+						</div>
+						<div class="col-4" id="nameError">
+						</div>
+					</div>
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="alias"> ALIAS</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{alias}" class="form-control" />
+						</div>
+						<div class="col-4" id="aliasError">
+						</div>
+					</div>
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="categoryType"> TYPE</label>
+						</div>
+						<div class="col-4">
+							<select th:field="*{categoryType}" id="categoryType" class="form-control">
+								<option value="">-SELECT-</option>
+								<option th:each="ob:${categoryTypes}" th:text="${ob.value}" th:value="${ob.key}"></option>
+							</select>
+						</div>
+						<div class="col-4" id="categoryTypeError">
+						</div>
+					</div>
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="status"> STATUS</label>
+						</div>
+						<div class="col-4">
+							<input type="radio" th:field="*{status}" value="ACTIVE" /> ACTIVE
+							<input type="radio" th:field="*{status}" value="INACTIVE" /> INACTIVE
+						</div>
+						<div class="col-4" id="statusError">
+						</div>
+					</div>
+					<!--new Row -->
+					<div class="row">
+						<div class="col-4">
+							<label for="note"> NOTE</label>
+						</div>
+						<div class="col-4">
+							<textarea th:field="*{note}" class="form-control"></textarea>
+						</div>
+						<div class="col-4" id="noteError">
+						</div>
+					</div>
+					<input type="submit" value="Update" class="btn btn-success" />
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

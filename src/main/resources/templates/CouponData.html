@@ -1,0 +1,43 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/commonui :: header"></div>
+
+<body>
+	<div th:insert="fragments/commonui :: menu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h1>Welcome to Coupon Data Page</h1>
+			</div>
+			<div class="card-body">
+				<table class="table table-bordered table-hover">
+					<tr class="bg-warning ">
+						<td>CODE</td>
+						<td>NOTE</td>
+						<td>PERCENTAGE</td>
+						<td>AVAILABLE</td>
+						<td>EXPDATE</td>
+						<td>TOTALALLOWED</td>
+						<td>MAX AMOUNT</td>
+						<td colspan='2'>OPERATIONS</td>
+					</tr>
+					<tr th:each="ob:${list}">
+						<td>[[${ob.code}]]</td>
+						<td>[[${ob.note}]]</td>
+						<td>[[${ob.percentage}]]</td>
+						<td>[[${ob.available}]]</td>
+						<td>[[${ob.expDate}]]</td>
+						<td>[[${ob.totalAllowed}]]</td>
+						<td>[[${ob.maxAllowed}]]</td>
+						<td><a th:href='@{/coupon/delete(id=${ob.id})}' class="btn btn-danger">DELETE</a></td>
+						<td><a th:href='@{/coupon/edit(id=${ob.id})}' class="btn btn-success">EDIT</a></td>
+					</tr>
+				</table>
+			</div>
+			<div class="card-footer bg-info text-white">
+				<b>[[${message}]]</b>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

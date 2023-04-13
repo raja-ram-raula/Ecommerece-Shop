@@ -1,0 +1,40 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/commonui :: header"></div>
+<body>
+<div th:insert="fragments/commonui :: menu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h1>Welcome to Product Data Page</h1>
+			</div>
+			<div class="card-body">
+				<table class="table table-bordered table-hover">
+					<tr class="bg-warning ">
+						<td>NAME</td>
+						<td>STATUS</td>
+						<td>STOCK</td>
+						<td>COST</td>
+						<td>BRAND</td>
+						<td>CATEGORY</td>
+						<td colspan='2'>OPERATIONS</td>
+					</tr>
+					<tr th:each="ob:${list}">
+						<td>[[${ob.name}]]</td>
+						<td>[[${ob.status}]]</td>
+						<td class="bg-info text-white text-center">[[${ob.inStock}]]</td>
+						<td>[[${ob.cost}]]</td>
+						<td>[[${ob.brand.name}]]</td>
+						<td>[[${ob.category.name}]]</td>
+						<td><a th:href='@{/product/delete(id=${ob.id})}' class="btn btn-danger">DELETE</a></td>
+						<td><a th:href='@{/product/edit(id=${ob.id})}' class="btn btn-success">EDIT</a></td>
+					</tr>
+				</table>
+			</div>
+			<div class="card-footer bg-info text-white">
+				<b>[[${message}]]</b>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

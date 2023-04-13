@@ -1,0 +1,25 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<div th:replace="fragments/customerUi :: header"></div>
+<body>
+<div th:insert="fragments/customerUi :: menu"></div>
+	<div class="container">
+		
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h3>ALL BRANDS EXIST IN E-COMM</h3>
+			</div>
+			<div class="card-body">
+				<div class="row">
+				 <th:block th:each="ob:${list}">
+				 	<div class="col-4">
+				 		<a th:href="@{/search/products(brandId=${ob[0]})}"> <img th:src="${ob[1]}"  /> </a>
+				 	</div>
+				 </th:block> 
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</body>
+
+</html>
